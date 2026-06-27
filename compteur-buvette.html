@@ -140,7 +140,8 @@
   /* Variante consigne : même structure que les boissons, + un mini-stepper "rendues" au milieu */
   .ligne-consigne{
     grid-template-columns: minmax(0,1fr) auto auto;
-    gap: 6px;
+    gap: 10px;
+    justify-content: space-between;
   }
   .ligne-consigne .produit-info{ flex-direction:column; align-items:flex-start; gap:1px; min-width:0; overflow:visible; }
   .ligne-consigne .produit-nom{ font-size: 1.02rem; color:#4a443c; white-space:normal; }
@@ -160,62 +161,13 @@
     vertical-align: 2px;
   }
 
-  .mini-stepper{
-    display:flex;
-    align-items:center;
-    background:#cfc7b6;
-    border-radius: var(--radius-sm);
-    overflow:hidden;
-    flex-shrink:0;
-  }
-  .mini-stepper-rendues{
-    position:relative;
-    padding-top: 13px;
-  }
-  .mini-stepper .mini-label{
-    position:absolute;
-    top: -1px;
-    left: 0;
-    right: 0;
-    text-align:center;
-    font-size: 0.56rem;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    font-weight:700;
-    color:#8a8275;
-  }
-  .mini-stepper button{
-    width: 28px;
-    height: 30px;
-    border:none;
-    background: transparent;
-    color: #3a3530;
-    font-size: 1rem;
-    line-height: 1;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    touch-action: manipulation;
-  }
-  .mini-stepper button:active{ background: rgba(0,0,0,0.08); }
-  .mini-stepper .count{
-    min-width: 20px;
-    text-align:center;
-    font-family: var(--font-num);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color:#27221d;
-    background:#c0b7a2;
-    height: 30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
   .ligne-consigne .stepper{ background:#cfc7b6; }
   .ligne-consigne .stepper button{ color:#3a3530; }
   .ligne-consigne .stepper .count{ background:#c0b7a2; color:#27221d; }
+
+  .ligne-consigne .stepper.stepper-rendu{ background: #b6624a; }
+  .ligne-consigne .stepper.stepper-rendu button{ color: var(--craie); }
+  .ligne-consigne .stepper.stepper-rendu .count{ background: #9c4a3c; color: var(--craie); }
 
   /* ===== Sous-totaux ===== */
   .souslignes{
@@ -372,8 +324,7 @@
         <span class="produit-nom">Consigne<span class="auto-tag">auto</span></span>
         <span class="produit-prix">1,00 €</span>
       </div>
-      <div class="mini-stepper mini-stepper-rendues" data-consigne="consigne" data-champ="rendues">
-        <span class="mini-label">Rendues</span>
+      <div class="stepper stepper-rendu" data-consigne="consigne" data-champ="rendues">
         <button type="button" data-action="moins" aria-label="Retirer une consigne rendue">−</button>
         <span class="count" data-display="consigneRendues">0</span>
         <button type="button" data-action="plus" aria-label="Ajouter une consigne rendue">+</button>
@@ -390,8 +341,7 @@
         <span class="produit-nom">Consigne cruche<span class="auto-tag">auto</span></span>
         <span class="produit-prix">5,00 €</span>
       </div>
-      <div class="mini-stepper mini-stepper-rendues" data-consigne="consigneCruche" data-champ="rendues">
-        <span class="mini-label">Rendues</span>
+      <div class="stepper stepper-rendu" data-consigne="consigneCruche" data-champ="rendues">
         <button type="button" data-action="moins" aria-label="Retirer une consigne cruche rendue">−</button>
         <span class="count" data-display="consigneCrucheRendues">0</span>
         <button type="button" data-action="plus" aria-label="Ajouter une consigne cruche rendue">+</button>
