@@ -37,7 +37,7 @@
   }
   body{
     min-height: 100vh;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 90px) env(safe-area-inset-left);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 24px) env(safe-area-inset-left);
   }
 
   @font-face{ /* fallback géré nativement, pas de fetch externe nécessaire */ }
@@ -161,7 +161,8 @@
   }
 
   /* Variante consigne : plus discrète, avec le badge "auto" */
-  .ligne.consigne .produit-nom{ font-size: 1.02rem; color:#4a443c; }
+  .ligne.consigne .produit-info{ flex-wrap: wrap; gap: 6px 10px; }
+  .ligne.consigne .produit-nom{ font-size: 0.96rem; color:#4a443c; }
   .ligne.consigne .stepper{ background:#cfc7b6; }
   .ligne.consigne .stepper button{ color:#3a3530; }
   .ligne.consigne .stepper .count{ background:#c0b7a2; color:#27221d; }
@@ -235,38 +236,6 @@
     color:#a9a193;
   }
 
-  /* ===== Pied d'action fixe ===== */
-  .barre-fixe{
-    position: fixed;
-    left:0; right:0; bottom:0;
-    padding: 10px 14px calc(env(safe-area-inset-bottom) + 10px);
-    background: linear-gradient(to top, var(--paper) 65%, rgba(246,239,226,0));
-  }
-  .barre-fixe-inner{
-    max-width: 560px;
-    margin:0 auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background: #fffdf8;
-    border:1.5px solid var(--encre);
-    border-radius: var(--radius);
-    padding: 10px 16px;
-    box-shadow: 0 4px 0 rgba(31,45,40,0.08);
-  }
-  .barre-fixe-inner .label{
-    font-size:0.72rem;
-    text-transform:uppercase;
-    letter-spacing:0.08em;
-    color:#6b6256;
-    font-weight:700;
-  }
-  .barre-fixe-inner .valeur{
-    font-family: var(--font-num);
-    font-weight:700;
-    font-size:1.45rem;
-  }
-
   footer.note{
     text-align:center;
     font-size: 0.7rem;
@@ -295,8 +264,8 @@
 
   <header>
     <div>
-      <h1>La note</h1>
-      <div class="souslogo">Buvette de l'asso</div>
+      <h1>Les marchés d'été</h1>
+      <div class="souslogo">Girmont Val d'Ajol</div>
     </div>
     <button class="reset-btn" id="btnReset" type="button">Remise à zéro</button>
   </header>
@@ -311,6 +280,18 @@
         <button type="button" data-action="moins" aria-label="Retirer une bière">−</button>
         <span class="count" data-display="biere">0</span>
         <button type="button" data-action="plus" aria-label="Ajouter une bière">+</button>
+      </div>
+    </div>
+
+    <div class="ligne" data-id="cruche">
+      <div class="produit-info">
+        <span class="produit-nom">Cruche bière</span>
+        <span class="produit-prix">15,00 €</span>
+      </div>
+      <div class="stepper">
+        <button type="button" data-action="moins" aria-label="Retirer une cruche de bière">−</button>
+        <span class="count" data-display="cruche">0</span>
+        <button type="button" data-action="plus" aria-label="Ajouter une cruche de bière">+</button>
       </div>
     </div>
 
@@ -338,6 +319,18 @@
       </div>
     </div>
 
+    <div class="ligne" data-id="vin">
+      <div class="produit-info">
+        <span class="produit-nom">Vin verre</span>
+        <span class="produit-prix">1,50 €</span>
+      </div>
+      <div class="stepper">
+        <button type="button" data-action="moins" aria-label="Retirer un verre de vin">−</button>
+        <span class="count" data-display="vin">0</span>
+        <button type="button" data-action="plus" aria-label="Ajouter un verre de vin">+</button>
+      </div>
+    </div>
+
     <div class="ligne consigne" data-id="consigne">
       <div class="produit-info">
         <span class="produit-nom">Consigne<span class="auto-tag">auto</span></span>
@@ -350,6 +343,18 @@
       </div>
     </div>
 
+    <div class="ligne consigne" data-id="consigneCruche">
+      <div class="produit-info">
+        <span class="produit-nom">Consigne cruche<span class="auto-tag">auto</span></span>
+        <span class="produit-prix">5,00 €</span>
+      </div>
+      <div class="stepper">
+        <button type="button" data-action="moins" aria-label="Retirer une consigne cruche">−</button>
+        <span class="count" data-display="consigneCruche">0</span>
+        <button type="button" data-action="plus" aria-label="Ajouter une consigne cruche">+</button>
+      </div>
+    </div>
+
     <div class="souslignes">
       <div class="sousligne-row"><span>Boissons</span><span data-display="sous-boissons">0,00 €</span></div>
       <div class="sousligne-row"><span>Consignes</span><span data-display="sous-consigne">0,00 €</span></div>
@@ -358,73 +363,72 @@
     <div class="total-bloc">
       <div class="total-label">Total à régler</div>
       <div class="total-chiffre"><span data-display="total">0,00</span><sup>€</sup></div>
-      <div class="total-detail"><span data-display="nb-boissons">0</span> boisson(s) · <span data-display="nb-consigne">0</span> consigne(s)</div>
     </div>
   </main>
-
-  <footer class="note">La consigne suit le nombre de boissons, mais reste modifiable à la main.</footer>
 </div>
 
-<div class="barre-fixe">
-  <div class="barre-fixe-inner">
-    <span class="label">Total</span>
-    <span class="valeur"><span data-display="total-fixe">0,00</span> €</span>
-  </div>
-</div>
 
 <script>
 (function(){
   "use strict";
 
-  var PRIX = { biere: 2.5, soft: 2.0, eau: 1.0, consigne: 1.0 };
+  var PRIX = {
+    biere: 2.5,
+    cruche: 15.0,
+    soft: 2.0,
+    eau: 1.0,
+    vin: 1.5,
+    consigne: 1.0,
+    consigneCruche: 5.0
+  };
 
-  var etat = { biere: 0, soft: 0, eau: 0, consigne: 0 };
+  // Boissons qui génèrent une consigne automatiquement, et laquelle.
+  var LIEN_CONSIGNE = {
+    biere: "consigne",
+    cruche: "consigneCruche"
+  };
 
-  // Pour savoir si on doit auto-ajuster la consigne quand une boisson change
-  function nbBoissons(){
-    return etat.biere + etat.soft + etat.eau;
-  }
+  var IDS_BOISSONS = ["biere", "cruche", "soft", "eau", "vin"];
+  var IDS_CONSIGNES = ["consigne", "consigneCruche"];
+
+  var etat = { biere: 0, cruche: 0, soft: 0, eau: 0, vin: 0, consigne: 0, consigneCruche: 0 };
 
   function formatEuro(n){
     return n.toFixed(2).replace(".", ",");
   }
 
   function maj(){
-    document.querySelector('[data-display="biere"]').textContent = etat.biere;
-    document.querySelector('[data-display="soft"]').textContent = etat.soft;
-    document.querySelector('[data-display="eau"]').textContent = etat.eau;
-    document.querySelector('[data-display="consigne"]').textContent = etat.consigne;
+    IDS_BOISSONS.concat(IDS_CONSIGNES).forEach(function(id){
+      document.querySelector('[data-display="' + id + '"]').textContent = etat[id];
+    });
 
-    var totalBoissons = etat.biere * PRIX.biere + etat.soft * PRIX.soft + etat.eau * PRIX.eau;
-    var totalConsigne = etat.consigne * PRIX.consigne;
+    var totalBoissons = 0;
+    IDS_BOISSONS.forEach(function(id){ totalBoissons += etat[id] * PRIX[id]; });
+
+    var totalConsigne = 0;
+    IDS_CONSIGNES.forEach(function(id){ totalConsigne += etat[id] * PRIX[id]; });
+
     var total = totalBoissons + totalConsigne;
 
     document.querySelector('[data-display="sous-boissons"]').textContent = formatEuro(totalBoissons) + " €";
     document.querySelector('[data-display="sous-consigne"]').textContent = formatEuro(totalConsigne) + " €";
     document.querySelector('[data-display="total"]').textContent = formatEuro(total);
-    document.querySelector('[data-display="total-fixe"]').textContent = formatEuro(total);
-    document.querySelector('[data-display="nb-boissons"]').textContent = nbBoissons();
-    document.querySelector('[data-display="nb-consigne"]').textContent = etat.consigne;
   }
 
   function changer(id, delta){
-    if(id === "consigne"){
-      etat.consigne = Math.max(0, etat.consigne + delta);
+    // Consignes : ajustables librement, jamais sous zéro.
+    if(IDS_CONSIGNES.indexOf(id) !== -1){
+      etat[id] = Math.max(0, etat[id] + delta);
       maj();
       return;
     }
 
-    var avant = nbBoissons();
     etat[id] = Math.max(0, etat[id] + delta);
-    var apres = nbBoissons();
 
-    // La consigne suit automatiquement le total de boissons
-    // tant qu'elle n'a pas été baissée manuellement sous ce total.
-    var diff = apres - avant;
-    if(diff > 0){
-      etat.consigne += diff;
-    } else if(diff < 0){
-      etat.consigne = Math.max(0, etat.consigne + diff);
+    // Si cette boisson a une consigne associée, on la fait suivre du même delta.
+    var idConsigne = LIEN_CONSIGNE[id];
+    if(idConsigne){
+      etat[idConsigne] = Math.max(0, etat[idConsigne] + delta);
     }
 
     maj();
@@ -463,7 +467,7 @@
     btnReset.textContent = "Remise à zéro";
     btnReset.classList.remove("reset-arme");
 
-    etat = { biere: 0, soft: 0, eau: 0, consigne: 0 };
+    etat = { biere: 0, cruche: 0, soft: 0, eau: 0, vin: 0, consigne: 0, consigneCruche: 0 };
     maj();
   });
 
